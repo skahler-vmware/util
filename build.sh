@@ -30,7 +30,7 @@ mkdir build
 cd build
 cmake3 -DCMAKE_INSTALL_PREFIX=/usr/local/gpdb ..
 make -j8
-sudo make install
+make install
 
 cd /home/gpadmin/gpdb_build
 rm -rf gpdb
