@@ -13,10 +13,6 @@ pip install --upgrade setuptools
 pip install --upgrade epydoc
 pip install --upgrade pyyaml
 
-mkdir /data
-mkdir /root/gpdb_build
-chmod 777 /root/gpdb_build/
-
 cat >> /etc/sysctl.conf <<EOF
 kernel.shmmax = 500000000
 kernel.shmmni = 4096
@@ -75,5 +71,7 @@ make -j8
 make install
 
 useradd -m -r gpadmin -d /home/gpadmin
+mkdir /usr/local/gpdb
 chown -R gpadmin /usr/local/gpdb
+mkdir /data
 chown -R gpadmin /data/
