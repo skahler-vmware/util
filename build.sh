@@ -63,4 +63,9 @@ mkdir /data/master
 mkdir /data/segments
 
 source /usr/local/gpdb/greenplum_path.sh
-gpinitsystem -a -c gpinitsystem_singlenode
+### Standard GPDB Cluster installation
+#gpinitsystem -a -c gpinitsystem_singlenode
+
+### Demo cluster dev installation
+#cd /home/gpadmin/gpdb_build/gpdb/gpAux/gpdemo
+#make cluster
