@@ -9,6 +9,9 @@ ssh -oStrictHostKeyChecking=no localhost 'uptime'
 ssh -oStrictHostKeyChecking=no localhost.localdomain 'uptime'
 ssh -oStrictHostKeyChecking=no `hostname` 'uptime'
 
+mkdir /home/gpadmin/gpdb_build
+chmod 777 /home/gpadmin/gpdb_build/
+
 cat > gpinitsystem_singlenode <<EOF
 ARRAY_NAME="GPDB SINGLENODE"
 MACHINE_LIST_FILE=./hostlist
