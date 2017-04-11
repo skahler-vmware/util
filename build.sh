@@ -12,6 +12,7 @@ ssh -oStrictHostKeyChecking=no `hostname` 'uptime'
 mkdir /home/gpadmin/gpdb_build
 chmod 777 /home/gpadmin/gpdb_build/
 
+### ORCA ###
 cd /home/gpadmin/gpdb_build
 rm -rf gp-xerces
 git clone https://github.com/greenplum-db/gp-xerces.git
@@ -32,6 +33,19 @@ cmake3 -DCMAKE_INSTALL_PREFIX=/usr/local/gpdb ..
 make -j8
 make install
 
+### GPPERFMON ###
+
+cd /home/gpadmin/gpdb_build
+rm -rf sigar
+git clone https://github.com/hyperic/sigar.git
+cd sigar
+mkdir build
+cd build
+cmake3 -DCMAKE_INSTALL_PREFIX=/usr/local/gpdb ..
+make -j8
+make install
+
+### GPDB ###
 cd /home/gpadmin/gpdb_build
 rm -rf gpdb
 git clone https://github.com/greenplum-db/gpdb.git
