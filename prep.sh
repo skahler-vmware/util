@@ -7,6 +7,11 @@ yum -y install gcc gcc-c++ git wget ncurses-devel bzip2 bison flex openssl-devel
 wget http://springdale.math.ias.edu/data/puias/computational/6/x86_64/libarchive3-3.2.1-1.sdl6.x86_64.rpm
 rpm -Uvh --force libarchive3-3.2.1-1.sdl6.x86_64.rpm
 
+# Need C++11
+wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+yum -y install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
+scl enable devtoolset-2 bash
+
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 yum -y install python-pip cmake3
 pip install --upgrade psutil
@@ -52,3 +57,5 @@ mkdir /usr/local/gpdb
 chown -R gpadmin /usr/local/gpdb
 mkdir /data
 chown -R gpadmin /data/
+
+echo '. /opt/rh/devtoolset-2/enable' >> /home/gpadmin/.bash_profile
