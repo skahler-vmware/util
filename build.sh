@@ -2,7 +2,7 @@
 set -e
 set -x
 
-ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -N ''
+yes | ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -N ''
 cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
 
 ssh -oStrictHostKeyChecking=no localhost 'uptime'
