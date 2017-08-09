@@ -4,6 +4,9 @@ set -x
 
 yum -y install gcc gcc-c++ git wget ncurses-devel bzip2 bison flex openssl-devel libcurl-devel readline-devel bzip2-devel libyaml libyaml-devel libevent-devel openldap-devel libxml2-devel libxslt-devel apr-devel apr-util-devel libffi-devel libxml2-devel python-devel perl-ExtUtils-Embed
 
+wget http://springdale.math.ias.edu/data/puias/computational/6/x86_64/libarchive3-3.2.1-1.sdl6.x86_64.rpm
+rpm -Uvh --force libarchive3-3.2.1-1.sdl6.x86_64.rpm
+
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 yum -y install python-pip cmake3
 pip install --upgrade psutil
