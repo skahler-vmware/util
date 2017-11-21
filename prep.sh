@@ -2,17 +2,28 @@
 set -e
 set -x
 
+OSVERSION=`rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release)`
+
 yum -y install gcc gcc-c++ git wget ncurses-devel bzip2 bison flex openssl-devel libcurl-devel json-c-devel readline-devel bzip2-devel libyaml libyaml-devel libevent-devel openldap-devel libxml2-devel libxslt-devel apr-devel apr-util-devel libffi-devel libxml2-devel python-devel perl-ExtUtils-Embed
 
-wget http://springdale.math.ias.edu/data/puias/computational/6/x86_64/libarchive3-3.2.1-1.sdl6.x86_64.rpm
-rpm -Uvh --force libarchive3-3.2.1-1.sdl6.x86_64.rpm
+# EARLY 6 or 7 options
+if [ "$OSVERSION" -eq "6" ]
+then
+ wget http://springdale.math.ias.edu/data/puias/computational/6/x86_64/libarchive3-3.2.1-1.sdl6.x86_64.rpm
+ rpm -Uvh --force libarchive3-3.2.1-1.sdl6.x86_64.rpm
 
-# Need C++11
-wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
-yum -y install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
-scl enable devtoolset-2 bash
+  # Need C++11
+  wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+  yum -y install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
+  scl enable devtoolset-2 bash
+  rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+fi
 
-rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+if [ "$OSVERSION" -eq "7" ]
+then
+  rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
+fi
+
 yum -y install python-pip cmake3
 pip install --upgrade psutil
 pip install --upgrade lockfile
@@ -46,6 +57,7 @@ EOF
 sysctl -p
 
 cat > /etc/security/limits.d/90-nproc.conf <<EOF
+kernel.msgmni = 2048
 * soft nofile 65536
 * hard nofile 65536
 * soft nproc 131072
@@ -58,4 +70,8 @@ chown -R gpadmin /usr/local/gpdb
 mkdir /data
 chown -R gpadmin /data/
 
-echo '. /opt/rh/devtoolset-2/enable' >> /home/gpadmin/.bash_profile
+# LATE 6 or 7 options
+if [ "$OSVERSION" -eq "6" ]
+then
+  echo '. /opt/rh/devtoolset-2/enable' >> /home/gpadmin/.bash_profile
+fi
